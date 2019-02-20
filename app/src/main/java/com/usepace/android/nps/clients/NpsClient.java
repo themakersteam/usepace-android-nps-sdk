@@ -7,7 +7,7 @@ import com.usepace.android.nps.interfaces.SurveyCallbacks;
 import com.usepace.android.nps.io.NpsPlatformApi;
 import com.usepace.android.nps.io.NpsPlatformApiCallbackInterface;
 import com.usepace.android.nps.io.model.RatingModel;
-import com.usepace.android.nps.screens.rating.RatingActivity;
+import com.usepace.android.nps.screens.rating.view.RatingActivity;
 import java.util.HashMap;
 
 class NpsClient implements NpsInterface {
