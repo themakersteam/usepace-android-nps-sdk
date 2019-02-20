@@ -9,6 +9,7 @@ import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
+import retrofit2.http.QueryMap;
 
 /**
  * Created by MohammedNabil
@@ -17,9 +18,9 @@ import retrofit2.http.POST;
  interface NpsPlatformApiInterface {
 
     @GET("eligibleHttp")
-    Call<RatingModel> getNpsSurvey(@Header("Authorization") String authorization, @Header("Accept-Language") String language);
+    Call<RatingModel> getNpsSurvey(@Header("Authorization") String authorization, @QueryMap(encoded = true) HashMap<String, Object> hashMap,  @Header("Accept-Language") String language);
 
     @POST("saveResultHttp")
-    Call<ResponseBody> postNpsSurvey(@Header("Authorization") String authorization, @Body HashMap<String, Object> request);
+    Call<ResponseBody> postNpsSurvey(@Header("Authorization") String authorization, @QueryMap(encoded = true) HashMap<String, Object> hashMap, @Body HashMap<String, Object> request);
 
 }

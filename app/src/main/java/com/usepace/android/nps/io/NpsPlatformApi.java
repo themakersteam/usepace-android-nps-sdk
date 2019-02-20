@@ -34,8 +34,10 @@ public class NpsPlatformApi {
      * @param auth_token
      * @param callback
      */
-    public void getNpsSurveys(String auth_token, String langauge,  final NpsPlatformApiCallbackInterface<RatingModel> callback) {
-        apiInterface.getNpsSurvey(auth_token, langauge).enqueue(new Callback<RatingModel>() {
+    public void getNpsSurveys(String client_id, String auth_token, String langauge,  final NpsPlatformApiCallbackInterface<RatingModel> callback) {
+        HashMap<String, Object> queryParams = new HashMap<>();
+        queryParams.put("client_id", client_id);
+        apiInterface.getNpsSurvey(auth_token,queryParams, langauge).enqueue(new Callback<RatingModel>() {
             @Override
             public void onResponse(Call<RatingModel> call, Response<RatingModel> response) {
                 if (response.isSuccessful()) {
@@ -59,13 +61,15 @@ public class NpsPlatformApi {
      * @param auth_token
      * @param callback
      */
-    public void postNpsSurveys(String auth_token, Integer user_selected_value, boolean dismissed,  final NpsPlatformApiCallbackInterface<ResponseBody> callback) {
+    public void postNpsSurveys(String auth_token, String client_id, Integer user_selected_value, boolean dismissed, final NpsPlatformApiCallbackInterface<ResponseBody> callback) {
+        HashMap<String, Object> queryParams = new HashMap<>();
+        queryParams.put("client_id", client_id);
         HashMap<String, Object> values = new HashMap<>();
         if (dismissed)
             values.put("dismissed", true);
         else
             values.put("score", user_selected_value);
-        apiInterface.postNpsSurvey(auth_token, values).enqueue(new Callback<ResponseBody>() {
+        apiInterface.postNpsSurvey(auth_token, queryParams, values).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 if (response.isSuccessful()) {

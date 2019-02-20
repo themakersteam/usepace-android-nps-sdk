@@ -8,21 +8,30 @@ import com.usepace.android.nps.io.NpsPlatformApi;
 import com.usepace.android.nps.io.NpsPlatformApiCallbackInterface;
 import com.usepace.android.nps.io.model.RatingModel;
 import com.usepace.android.nps.screens.rating.RatingActivity;
+import java.util.HashMap;
 
 class NpsClient implements NpsInterface {
 
     private Context context;
     private String user_token;
+    private String client_id;
+    private HashMap<String, Object> user_data;
 
     @Override
-    public void init(Context context, String user_token) {
+    public void init(Context context, String client_id) {
         this.context = context;
+        this.client_id = client_id;
+    }
+
+    @Override
+    public void setUser(String user_token, HashMap<String, Object> user_data) {
         this.user_token = user_token;
+        this.user_data = user_data;
     }
 
     @Override
     public void survey(String language, final SurveyCallbacks surveyCallbacks) {
-        NpsPlatformApi.Instance().getNpsSurveys(user_token, language, new NpsPlatformApiCallbackInterface<RatingModel>() {
+        NpsPlatformApi.Instance().getNpsSurveys(user_token, client_id,  language, new NpsPlatformApiCallbackInterface<RatingModel>() {
             @Override
             public void onSuccess(RatingModel result) {
                 if (context != null) {
@@ -38,7 +47,6 @@ class NpsClient implements NpsInterface {
                     }
                 }
             }
-
             @Override
             public void onError(String error) {
                 if (surveyCallbacks != null) {
