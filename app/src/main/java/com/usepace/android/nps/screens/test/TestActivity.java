@@ -7,6 +7,8 @@ import com.usepace.android.nps.clients.Nps;
 import com.usepace.android.nps.exeptions.NpsException;
 import com.usepace.android.nps.interfaces.SurveyCallbacks;
 
+import java.util.HashMap;
+
 public class TestActivity extends Activity {
 
     @Override
@@ -14,7 +16,8 @@ public class TestActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test);
         Nps.init(this, "");
-        Nps.survey(new SurveyCallbacks() {
+        Nps.setUser("", new HashMap<String, Object>());
+        Nps.survey("en", new SurveyCallbacks() {
             @Override
             public void onFailedToLoadSurvey(NpsException npsException) {
 
