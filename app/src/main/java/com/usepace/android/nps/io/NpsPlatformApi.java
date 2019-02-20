@@ -2,7 +2,7 @@ package com.usepace.android.nps.io;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.JsonElement;
+import com.usepace.android.nps.io.model.RatingModel;
 import java.util.HashMap;
 import java.util.concurrent.TimeUnit;
 import okhttp3.OkHttpClient;
@@ -34,10 +34,10 @@ public class NpsPlatformApi {
      * @param auth_token
      * @param callback
      */
-    public void getNpsSurveys(String auth_token, final NpsPlatformApiCallbackInterface<JsonElement> callback) {
-        apiInterface.getNpsSurvey(auth_token).enqueue(new Callback<JsonElement>() {
+    public void getNpsSurveys(String auth_token, String langauge,  final NpsPlatformApiCallbackInterface<RatingModel> callback) {
+        apiInterface.getNpsSurvey(auth_token, langauge).enqueue(new Callback<RatingModel>() {
             @Override
-            public void onResponse(Call<JsonElement> call, Response<JsonElement> response) {
+            public void onResponse(Call<RatingModel> call, Response<RatingModel> response) {
                 if (response.isSuccessful()) {
                     callback.onSuccess(response.body());
                 }
@@ -47,7 +47,7 @@ public class NpsPlatformApi {
             }
 
             @Override
-            public void onFailure(Call<JsonElement> call, Throwable t) {
+            public void onFailure(Call<RatingModel> call, Throwable t) {
                 callback.onError("Failed with: " + t != null ? t.getMessage() : "Network !");
             }
         });

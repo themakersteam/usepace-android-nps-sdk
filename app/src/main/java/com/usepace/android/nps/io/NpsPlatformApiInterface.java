@@ -1,7 +1,7 @@
 package com.usepace.android.nps.io;
 
 
-import com.google.gson.JsonElement;
+import com.usepace.android.nps.io.model.RatingModel;
 import java.util.HashMap;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -17,7 +17,7 @@ import retrofit2.http.POST;
  interface NpsPlatformApiInterface {
 
     @GET("eligibleHttp")
-    Call<JsonElement> getNpsSurvey(@Header("Authorization") String authorization);
+    Call<RatingModel> getNpsSurvey(@Header("Authorization") String authorization, @Header("Accept-Language") String language);
 
     @POST("saveResultHttp")
     Call<ResponseBody> postNpsSurvey(@Header("Authorization") String authorization, @Body HashMap<String, Object> request);
