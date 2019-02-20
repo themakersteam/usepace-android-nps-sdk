@@ -22,9 +22,9 @@ public class Nps {
      *
      * @param surveyCallbacks
      */
-    public static void survey(SurveyCallbacks surveyCallbacks) {
+    public static void survey(String langauge, SurveyCallbacks surveyCallbacks) {
         if (npsClient == null)
             npsClient = new NpsClient();
-        npsClient.survey(surveyCallbacks);
+        npsClient.survey(langauge, surveyCallbacks);
     }
 }

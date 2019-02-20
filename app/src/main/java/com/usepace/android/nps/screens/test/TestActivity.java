@@ -1,10 +1,11 @@
 package com.usepace.android.nps.screens.test;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import com.usepace.android.nps.R;
-import com.usepace.android.nps.screens.rating.RatingActivity;
+import com.usepace.android.nps.clients.Nps;
+import com.usepace.android.nps.exeptions.NpsException;
+import com.usepace.android.nps.interfaces.SurveyCallbacks;
 
 public class TestActivity extends Activity {
 
@@ -12,6 +13,12 @@ public class TestActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test);
-        startActivity(new Intent(this, RatingActivity.class));
+        Nps.init(this, "");
+        Nps.survey(new SurveyCallbacks() {
+            @Override
+            public void onFailedToLoadSurvey(NpsException npsException) {
+
+            }
+        });
     }
 }
