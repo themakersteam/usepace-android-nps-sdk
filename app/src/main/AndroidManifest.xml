@@ -11,22 +11,22 @@
         android:theme="@style/AppTheme">
 
         <!-- todo: Uncomment for testing -->
-        <activity
-            android:name=".screens.test.TestActivity"
-            android:configChanges="orientation|screenSize|keyboardHidden|screenLayout"
-            android:launchMode="singleTask"
-            android:screenOrientation="portrait"
-            android:theme="@style/Theme.AppCompat"
-            android:windowSoftInputMode="adjustNothing">
+        <!--<activity-->
+            <!--android:name=".screens.test.TestActivity"-->
+            <!--android:configChanges="orientation|screenSize|keyboardHidden|screenLayout"-->
+            <!--android:launchMode="singleTask"-->
+            <!--android:screenOrientation="portrait"-->
+            <!--android:theme="@style/Theme.AppCompat"-->
+            <!--android:windowSoftInputMode="adjustNothing">-->
 
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            <!--<intent-filter>-->
+                <!--<action android:name="android.intent.action.MAIN" />-->
+                <!--<category android:name="android.intent.category.LAUNCHER" />-->
+            <!--</intent-filter>-->
 
-        </activity>
+        <!--</activity>-->
 
-        <activity android:name=".screens.rating.RatingActivity" android:theme="@style/Theme.AppCompat.Translucent" />
+        <activity android:name=".screens.rating.view.RatingActivity" android:theme="@style/Theme.AppCompat.Translucent" />
 
     </application>
 
