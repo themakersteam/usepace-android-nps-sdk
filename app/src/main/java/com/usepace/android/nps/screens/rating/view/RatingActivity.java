@@ -17,22 +17,18 @@ import android.widget.Toast;
 import com.usepace.android.nps.R;
 import com.usepace.android.nps.screens.rating.RatingInterface;
 import com.usepace.android.nps.screens.rating.presenter.RatingPresenter;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 public class RatingActivity extends AppCompatActivity implements RatingInterface.View, RadioGroup.OnCheckedChangeListener {
 
-
-    @BindView(R.id.layout_rating) LinearLayout ratingLayout;
-    @BindView(R.id.iv_dismiss) ImageView ivDismiss;
-    @BindView(R.id.tv_question) TextView tvQuestion;
-    @BindView(R.id.tv_high_hint) TextView tvHighHint;
-    @BindView(R.id.tv_low_hint) TextView tvLowHint;
-    @BindView(R.id.rg1) RadioGroup rg1;
-    @BindView(R.id.rg2) RadioGroup rg2;
-    @BindView(R.id.btn_submit) Button btnSubmit;
-    @BindView(R.id.progress) ProgressBar progressBar;
+    private LinearLayout ratingLayout;
+    private ImageView ivDismiss;
+    private TextView tvQuestion;
+    private TextView tvHighHint;
+    private TextView tvLowHint;
+    private RadioGroup rg1;
+    private RadioGroup rg2;
+    private Button btnSubmit;
+    private ProgressBar progressBar;
 
     private RatingPresenter ratingPresenter;
     private int last_checked_id = -1;
@@ -41,11 +37,42 @@ public class RatingActivity extends AppCompatActivity implements RatingInterface
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rating);
-        ButterKnife.bind(this);
+        init();
         ratingPresenter = new RatingPresenter(this, this);
         ratingPresenter.init();
         rg1.setOnCheckedChangeListener(this);
         rg2.setOnCheckedChangeListener(this);
+    }
+
+    private void init() {
+        ratingLayout = findViewById(R.id.layout_rating);
+        ivDismiss = findViewById(R.id.iv_dismiss);
+        tvQuestion = findViewById(R.id.tv_question);
+        tvHighHint = findViewById(R.id.tv_high_hint);
+        tvLowHint = findViewById(R.id.tv_low_hint);
+        rg1 = findViewById(R.id.rg1);
+        rg2 = findViewById(R.id.rg2);
+        btnSubmit = findViewById(R.id.btn_submit);
+        progressBar = findViewById(R.id.progress);
+        ivDismiss.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ratingPresenter.onBackPressed();
+            }
+        });
+        btnSubmit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (rg1.findViewById(last_checked_id) != null) {
+                    Integer selected = Integer.parseInt(((RadioButton)rg1.findViewById(last_checked_id)).getText().toString());
+                    ratingPresenter.submitButtonClicked(selected);
+                }
+                else if (rg2.findViewById(last_checked_id) != null) {
+                    Integer selected = Integer.parseInt(((RadioButton)rg2.findViewById(last_checked_id)).getText().toString());
+                    ratingPresenter.submitButtonClicked(selected);
+                }
+            }
+        });
     }
 
     @Override
@@ -99,23 +126,6 @@ public class RatingActivity extends AppCompatActivity implements RatingInterface
     public void closeWithMessage(String message) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
         finish();
-    }
-
-    @OnClick(R.id.iv_dismiss)
-    protected void dismissClicked() {
-        ratingPresenter.onBackPressed();
-    }
-
-    @OnClick(R.id.btn_submit)
-    protected void buttonSubmit() {
-        if (rg1.findViewById(last_checked_id) != null) {
-            Integer selected = Integer.parseInt(((RadioButton)rg1.findViewById(last_checked_id)).getText().toString());
-            ratingPresenter.submitButtonClicked(selected);
-        }
-        else if (rg2.findViewById(last_checked_id) != null) {
-            Integer selected = Integer.parseInt(((RadioButton)rg2.findViewById(last_checked_id)).getText().toString());
-            ratingPresenter.submitButtonClicked(selected);
-        }
     }
 
     @Override
