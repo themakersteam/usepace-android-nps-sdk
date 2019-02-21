@@ -34,7 +34,7 @@ class NpsClient implements NpsInterface {
         NpsPlatformApi.Instance().getNpsSurveys(user_token, client_id,  language, new NpsPlatformApiCallbackInterface<RatingModel>() {
             @Override
             public void onSuccess(RatingModel result) {
-                if (context != null) {
+                if (context != null && result != null && result.isEligible()) {
                     try {
                         Intent a1 = new Intent(context, RatingActivity.class);
                         a1.putExtra("RATING", result);
