@@ -30,7 +30,7 @@ class NpsClient implements NpsInterface {
     }
 
     @Override
-    public void survey(String language, final SurveyCallbacks surveyCallbacks) {
+    public void survey(final String language, final SurveyCallbacks surveyCallbacks) {
         NpsPlatformApi.Instance().getNpsSurveys(user_token, client_id,  language, new NpsPlatformApiCallbackInterface<RatingModel>() {
             @Override
             public void onSuccess(RatingModel result) {
@@ -40,6 +40,7 @@ class NpsClient implements NpsInterface {
                         a1.putExtra("RATING", result);
                         a1.putExtra("CLIENT_ID", client_id);
                         a1.putExtra("USER_TOKEN", user_token);
+                        a1.putExtra("LANGUAGE", language);
                         context.startActivity(a1);
                     }
                     catch (Exception e){

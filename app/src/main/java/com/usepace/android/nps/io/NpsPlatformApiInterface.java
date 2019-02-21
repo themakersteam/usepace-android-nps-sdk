@@ -1,9 +1,9 @@
 package com.usepace.android.nps.io;
 
 
+import com.usepace.android.nps.io.model.Message;
 import com.usepace.android.nps.io.model.RatingModel;
 import java.util.HashMap;
-import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
@@ -21,6 +21,6 @@ import retrofit2.http.QueryMap;
     Call<RatingModel> getNpsSurvey(@Header("Authorization") String authorization, @QueryMap(encoded = true) HashMap<String, Object> hashMap,  @Header("Accept-Language") String language);
 
     @POST("saveResultHttp")
-    Call<ResponseBody> postNpsSurvey(@Header("Authorization") String authorization, @QueryMap(encoded = true) HashMap<String, Object> hashMap, @Body HashMap<String, Object> request);
+    Call<Message> postNpsSurvey(@Header("Accept-Language") String language, @Header("Authorization") String authorization, @QueryMap(encoded = true) HashMap<String, Object> hashMap, @Body HashMap<String, Object> request);
 
 }

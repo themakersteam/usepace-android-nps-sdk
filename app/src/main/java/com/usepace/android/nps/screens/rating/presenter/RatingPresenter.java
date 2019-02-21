@@ -6,7 +6,6 @@ import com.usepace.android.nps.io.NpsPlatformApi;
 import com.usepace.android.nps.io.NpsPlatformApiCallbackInterface;
 import com.usepace.android.nps.io.model.RatingModel;
 import com.usepace.android.nps.screens.rating.RatingInterface;
-import okhttp3.ResponseBody;
 
 public class RatingPresenter implements RatingInterface.Presenter {
 
@@ -14,7 +13,7 @@ public class RatingPresenter implements RatingInterface.Presenter {
     private Activity activity;
 
     private RatingModel ratingModel;
-    private String client_id, user_token;
+    private String client_id, user_token, language;
 
     public RatingPresenter(Activity activity, RatingInterface.View view) {
         this.view = view;
@@ -27,6 +26,8 @@ public class RatingPresenter implements RatingInterface.Presenter {
             ratingModel = (RatingModel) activity.getIntent().getExtras().getSerializable("RATING");
             client_id = activity.getIntent().getStringExtra("CLIENT_ID");
             user_token = activity.getIntent().getStringExtra("USER_TOKEN");
+            language = activity.getIntent().getStringExtra("LANGUAGE");
+
             view.startRatingAnimationFromBottom();
             if (ratingModel != null && ratingModel.isDismiss()) {
                 view.showDismissButton();
@@ -46,11 +47,11 @@ public class RatingPresenter implements RatingInterface.Presenter {
     @Override
     public void submitButtonClicked(Integer value) {
         view.showLoading(true);
-        NpsPlatformApi.Instance().postNpsSurveys(user_token, client_id, value, false, new NpsPlatformApiCallbackInterface<ResponseBody>() {
+        NpsPlatformApi.Instance().postNpsSurveys(language, user_token, client_id, value, false, new NpsPlatformApiCallbackInterface<String>() {
             @Override
-            public void onSuccess(ResponseBody result) {
+            public void onSuccess(String result) {
                 if (activity != null && !activity.isFinishing()) {
-                    view.closeWithMessage(activity.getString(R.string.nps_thank_you));
+                    view.closeWithMessage(result != null ? result : activity.getString(R.string.nps_thank_you));
                 }
             }
 
@@ -67,9 +68,9 @@ public class RatingPresenter implements RatingInterface.Presenter {
     public void onBackPressed() {
         if (ratingModel != null && ratingModel.isDismiss()) {
             view.showLoading(true);
-            NpsPlatformApi.Instance().postNpsSurveys(user_token, client_id, null, true, new NpsPlatformApiCallbackInterface<ResponseBody>() {
+            NpsPlatformApi.Instance().postNpsSurveys(language, user_token, client_id, null, true, new NpsPlatformApiCallbackInterface<String>() {
                 @Override
-                public void onSuccess(ResponseBody result) {
+                public void onSuccess(String result) {
                     view.closeRatingView();
                 }
                 @Override

@@ -2,11 +2,11 @@ package com.usepace.android.nps.io;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.usepace.android.nps.io.model.Message;
 import com.usepace.android.nps.io.model.RatingModel;
 import java.util.HashMap;
 import java.util.concurrent.TimeUnit;
 import okhttp3.OkHttpClient;
-import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -61,7 +61,7 @@ public class NpsPlatformApi {
      * @param auth_token
      * @param callback
      */
-    public void postNpsSurveys(String auth_token, String client_id, Integer user_selected_value, boolean dismissed, final NpsPlatformApiCallbackInterface<ResponseBody> callback) {
+    public void postNpsSurveys(String langauge, String auth_token, String client_id, Integer user_selected_value, boolean dismissed, final NpsPlatformApiCallbackInterface<String> callback) {
         HashMap<String, Object> queryParams = new HashMap<>();
         queryParams.put("client_id", client_id);
         HashMap<String, Object> values = new HashMap<>();
@@ -69,11 +69,16 @@ public class NpsPlatformApi {
             values.put("dismissed", true);
         else
             values.put("score", user_selected_value);
-        apiInterface.postNpsSurvey(auth_token, queryParams, values).enqueue(new Callback<ResponseBody>() {
+        apiInterface.postNpsSurvey(langauge, auth_token, queryParams, values).enqueue(new Callback<Message>() {
             @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+            public void onResponse(Call<Message> call, Response<Message> response) {
                 if (response.isSuccessful()) {
-                    callback.onSuccess(response.body());
+                    if (response.body() != null && response.body().getMessage() != null) {
+                        callback.onSuccess(response.body().getMessage());
+                    }
+                    else {
+                        callback.onSuccess(null);
+                    }
                 }
                 else {
                     callback.onError("Failed with : " + response.code() + ">> " + response.errorBody() != null ? response.errorBody().toString() : "");
@@ -81,7 +86,7 @@ public class NpsPlatformApi {
             }
 
             @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
+            public void onFailure(Call<Message> call, Throwable t) {
                 callback.onError("Failed with: " + t != null ? t.getMessage() : "Network !");
             }
         });

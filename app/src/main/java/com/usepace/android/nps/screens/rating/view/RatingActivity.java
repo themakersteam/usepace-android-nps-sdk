@@ -37,11 +37,19 @@ public class RatingActivity extends AppCompatActivity implements RatingInterface
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rating);
+        fadeIn();
         init();
         ratingPresenter = new RatingPresenter(this, this);
         ratingPresenter.init();
         rg1.setOnCheckedChangeListener(this);
         rg2.setOnCheckedChangeListener(this);
+    }
+
+    private void fadeIn() {
+        View view = findViewById(android.R.id.content);
+        Animation mLoadAnimation = AnimationUtils.loadAnimation(getApplicationContext(), android.R.anim.fade_in);
+        mLoadAnimation.setDuration(500);
+        view.startAnimation(mLoadAnimation);
     }
 
     private void init() {
@@ -91,7 +99,11 @@ public class RatingActivity extends AppCompatActivity implements RatingInterface
 
     @Override
     public void showSubmit(boolean show) {
-        btnSubmit.setVisibility(show ? View.VISIBLE : View.GONE);
+        if (show && btnSubmit.getVisibility() != View.VISIBLE) {
+            Animation bottomUp = AnimationUtils.loadAnimation(this, R.anim.slide_from_bottom);
+            btnSubmit.startAnimation(bottomUp);
+            btnSubmit.setVisibility(show ? View.VISIBLE : View.GONE);
+        }
     }
 
     @Override
@@ -110,6 +122,7 @@ public class RatingActivity extends AppCompatActivity implements RatingInterface
     public void showLoading(boolean show) {
         progressBar.setVisibility(show ? View.VISIBLE : View.GONE);
         ratingLayout.setVisibility(show ? View.GONE : View.VISIBLE);
+        ivDismiss.setVisibility(show ? View.GONE : ivDismiss.getVisibility());
     }
 
     @Override
@@ -120,12 +133,13 @@ public class RatingActivity extends AppCompatActivity implements RatingInterface
     @Override
     public void closeRatingView() {
         finish();
+        overridePendingTransition(0, android.R.anim.fade_out);
     }
 
     @Override
     public void closeWithMessage(String message) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
-        finish();
+        closeRatingView();
     }
 
     @Override

@@ -46,8 +46,8 @@
 
     ```bash
     <string name="nps_submit">Submit</string>
-    <string name="nps_thank_you">Thank you 😊</string>
-    <string name="nps_failed">Failed to submit result 🙁</string>
+    <string name="nps_thank_you">Thank you</string>
+    <string name="nps_failed">Failed to submit result</string>
     ```
  * For colors styling override to colors.xml
 
