@@ -5,7 +5,7 @@
                 android:radius="8dp" />
 
             <solid
-                android:color="@color/colorAccent" />
+                android:color="@color/nps_colorAccent" />
 
         </shape>
     </item>
@@ -16,7 +16,7 @@
                 android:radius="8dp" />
 
             <solid
-                android:color="@color/colorAccent"/>
+                android:color="@color/nps_colorAccent"/>
         </shape>
     </item>
 </selector>
