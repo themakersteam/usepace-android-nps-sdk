@@ -38,6 +38,8 @@ class NpsClient implements NpsInterface {
                     try {
                         Intent a1 = new Intent(context, RatingActivity.class);
                         a1.putExtra("RATING", result);
+                        a1.putExtra("CLIENT_ID", client_id);
+                        a1.putExtra("USER_TOKEN", user_token);
                         context.startActivity(a1);
                     }
                     catch (Exception e){

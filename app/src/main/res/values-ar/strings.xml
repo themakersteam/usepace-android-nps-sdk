@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Nps</string>
-    <string name="submit">ارسال</string>
+    <string name="nps_app_name">Nps</string>
+    <string name="nps_submit">ارسال</string>
+    <string name="nps_thank_you">شكرا لك 😊</string>
+    <string name="nps_failed">فشل في تسجيل البيانات 🙁</string>
 </resources>
