@@ -127,6 +127,8 @@ public class RatingActivity extends AppCompatActivity implements RatingInterface
 
     @Override
     public void showDismissButton() {
+        Animation slideFromTop = AnimationUtils.loadAnimation(this, R.anim.slide_from_top);
+        ivDismiss.startAnimation(slideFromTop);
         ivDismiss.setVisibility(View.VISIBLE);
     }
 
